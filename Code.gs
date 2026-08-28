@@ -1,7 +1,11 @@
+function onOpen() {
+  var ui = SpreadsheetApp.getUi();
+
+  ui.createMenu("Claims Automated").addItem("Open Data Entry Form", "showDataEntryForm").addToUi();
+}
+
 function showDataEntryForm() {
-  var html = HtmlService.createHtmlOutputFromFile("Form")
-    .setWidth(1100) // Expanded width to fit the grid cleanly
-    .setHeight(800);
+  var html = HtmlService.createHtmlOutputFromFile("Form").setWidth(1100).setHeight(800);
   SpreadsheetApp.getUi().showModalDialog(html, "Claims Registry - 2026 | Claims Department");
 }
 
