@@ -1,0 +1,393 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        padding: 20px;
+        background-color: #ffffff;
+        color: #333;
+        margin: 0;
+      }
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .title {
+        font-size: 28px;
+        font-weight: normal;
+        margin: 0;
+      }
+      .search-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+      .search-box-container {
+        display: flex;
+        align-items: center;
+        border: 1px solid #777;
+        padding: 4px 8px;
+        width: 350px;
+        background: #fff;
+      }
+      .search-icon {
+        margin-right: 8px;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      .search-input {
+        border: none;
+        width: 100%;
+        outline: none;
+        font-size: 14px;
+      }
+      .search-caption {
+        font-size: 11px;
+        font-style: italic;
+        color: #555;
+        margin-top: 4px;
+      }
+
+      .section-banner {
+        font-size: 11px;
+        font-weight: bold;
+        color: #7f8c8d;
+        border-bottom: 2px solid #bdc3c7;
+        margin-top: 20px;
+        padding-bottom: 2px;
+        text-transform: uppercase;
+      }
+
+      .grid-row {
+        display: grid;
+        gap: 12px;
+        margin-top: 8px;
+      }
+      .cols-5 {
+        grid-template-columns: repeat(5, 1fr);
+      }
+      .cols-6 {
+        grid-template-columns: repeat(6, 1fr);
+      }
+      .cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+      }
+      .input-group label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 3px;
+        text-transform: uppercase;
+      }
+      .input-group input,
+      .input-group select {
+        padding: 6px;
+        border: 1px solid #bdc3c7;
+        border-radius: 4px;
+        font-size: 13px;
+        box-sizing: border-box;
+        width: 100%;
+        height: 32px;
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 15px;
+        padding-top: 0px;
+      }
+      button {
+        width: 160px;
+        padding: 10px;
+        cursor: pointer;
+        border: 1px solid #3498db;
+        border-radius: 20px;
+        background: white;
+        color: #3498db;
+        font-size: 13px;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: all 0.2s;
+      }
+      button:hover {
+        background: #3498db;
+        color: white;
+      }
+      .btn-close {
+        border-color: #f03813;
+        color: #7f8c8d;
+      }
+      .btn-close:hover {
+        background: #f03813;
+        color: white;
+      }
+
+      .footer-note {
+        text-align: center;
+        font-size: 12px;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header-container">
+      <div class="title">Claims Registry</div>
+      <div class="search-wrapper">
+        <div class="search-box-container">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            id="globalSearch"
+            class="search-input"
+            placeholder="click Search button below..."
+            onkeydown="if (event.key === 'Enter') findRecord();"
+          />
+        </div>
+        <span class="search-caption">Search for BRANCH - CLAIM NUMBER, ASSURED, POLICY NUMBER only</span>
+      </div>
+    </div>
+
+    <form id="entryForm">
+      <input type="hidden" id="rowNumber" />
+
+      <div class="section-banner">Basic Claim Info</div>
+      <div class="grid-row cols-5">
+        <div class="input-group"><label>Inlis - Claim Number</label><input type="text" id="inlis" /></div>
+        <div class="input-group"><label>Branch - Claim Number</label><input type="text" id="branch" /></div>
+        <div class="input-group"><label>Date Filed</label><input type="date" id="dateFiled" /></div>
+        <div class="input-group"><label>Assured</label><input type="text" id="assured" /></div>
+        <div class="input-group"><label>Policy Number</label><input type="text" id="policy" /></div>
+      </div>
+
+      <div class="grid-row cols-5">
+        <div class="input-group"><label>Agent</label><input type="text" id="agent" /></div>
+        <div class="input-group"><label>Date Reported</label><input type="date" id="dateReported" /></div>
+        <div class="input-group"><label>Date of Loss</label><input type="date" id="dateLoss" /></div>
+        <div class="input-group"><label>From</label><input type="date" id="from" /></div>
+        <div class="input-group"><label>To</label><input type="date" id="to" /></div>
+      </div>
+
+      <div class="section-banner">Vehicle Details</div>
+      <div class="grid-row cols-6">
+        <div class="input-group"><label>Sum Insured</label><input type="text" id="sumInsured" /></div>
+        <div class="input-group"><label>Nature of Claim</label><input type="text" id="natureClaim" /></div>
+        <div class="input-group"><label>Type of Vehicle</label><input type="text" id="typeVehicle" /></div>
+        <div class="input-group"><label>Plate No.</label><input type="text" id="plateNo" /></div>
+        <div class="input-group"><label>Insured Unit</label><input type="text" id="insuredUnit" /></div>
+        <div class="input-group"><label>Engine No.</label><input type="text" id="engineNo" /></div>
+      </div>
+
+      <div class="grid-row cols-5">
+        <div class="input-group"><label>Chassis</label><input type="text" id="chassis" /></div>
+        <div class="input-group"><label>Payee</label><input type="text" id="payee" /></div>
+        <div class="input-group"><label>Preferred Shop</label><input type="text" id="preferredShop" /></div>
+        <div class="input-group"><label>Loss Reserved</label><input type="text" id="lossReserved" /></div>
+        <div class="input-group"><label>Amount</label><input type="text" id="amountY" /></div>
+      </div>
+
+      <div class="section-banner">Financials & Status</div>
+      <div class="grid-row cols-5">
+        <div class="input-group">
+          <label>Status</label>
+          <select id="status">
+            <option value=""></option>
+            <option value="LACKING DOCUMENTS">LACKING DOCUMENTS</option>
+            <option value="EVALUATION">EVALUATION</option>
+            <option value="LOA">LOA</option>
+            <option value="RECOMMENDATION">RECOMMENDATION</option>
+            <option value="CLOSED/PAID">CLOSED/PAID</option>
+            <option value="DENIED">DENIED</option>
+            <option value="FORWARDED TO ACCOUNTING">FORWARDED TO ACCOUNTING</option>
+            <option value="FORWARDED TO HEAD OFFICE">FORWARDED TO HEAD OFFICE</option>
+            <option value="ASSIGNED TO INDEPENDENT ADJUSTER">ASSIGNED TO INDEPENDENT ADJUSTER</option>
+            <option value="OFFER LETTER">OFFER LETTER.</option>
+            <option value="PREMIUM VERIACATION">PREMIUM VERIACATION</option>
+          </select>
+        </div>
+        <div class="input-group"><label>Remarks & Date</label><input type="text" id="remarksDate" /></div>
+        <div class="input-group"><label>Date</label><input type="date" id="dateAc" /></div>
+        <div class="input-group"><label>Payee (OD)</label><input type="text" id="payeeOd" /></div>
+        <div class="input-group"><label>Amount</label><input type="text" id="amountAf" /></div>
+      </div>
+
+      <div class="grid-row cols-5">
+        <div class="input-group"><label>Date Closed</label><input type="date" id="dateClosed" /></div>
+        <div class="input-group"><label>Amount Paid</label><input type="text" id="amountPaid" /></div>
+        <div class="input-group"><label>Voucher No.</label><input type="text" id="voucherNo" /></div>
+        <div class="input-group"><label>Or No.</label><input type="text" id="orNo" /></div>
+        <div class="input-group"><label>Date Paid Voucher</label><input type="date" id="datePaidVoucher" /></div>
+      </div>
+
+      <div class="section-banner">Payment & Processing</div>
+      <div class="grid-row cols-3">
+        <div class="input-group"><label>Payment Made From</label><input type="text" id="paymentFrom" /></div>
+        <div class="input-group">
+          <label>Date Forwarded to Accounting</label><input type="date" id="dateForwarded" />
+        </div>
+        <div class="input-group">
+          <label>Adjuster</label>
+          <select id="adjuster">
+            <option value=""></option>
+            <option value="CHRIS KENNETH B. KILAT">CHRIS KENNETH B. KILAT</option>
+            <option value="JESSICA A. BAOBAO">JESSICA A. BAOBAO</option>
+            <option value="MCKLEIN G. JALANDONI">MCKLEIN G. JALANDONI</option>
+            <option value="RONILLO S. LUCAGBO JR.">RONILLO S. LUCAGBO JR.</option>
+            <option value="FRANCINE DEL ROSARIO">FRANCINE DEL ROSARIO</option>
+            <option value="JONNEL S ABELLANOSA">JONNEL S ABELLANOSA</option>
+            <option value="KEEN BAYONITO">KEEN BAYONITO</option>
+            <option value="WARREN CAMEROS">WARREN CAMEROS</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="btn-container">
+        <button type="button" onclick="findRecord()">Search</button>
+        <button type="button" onclick="submitData()">New Record</button>
+        <button type="button" onclick="updateData()">Update Record</button>
+        <button type="button" class="btn-close" onclick="google.script.host.close()">Close</button>
+      </div>
+    </form>
+
+    <div class="footer-note">Claims Department | Created by Claims intern</div>
+
+    <script>
+      function getFormData() {
+        var getVal = function (id) {
+          var el = document.getElementById(id);
+          return el ? el.value : "";
+        };
+
+        return {
+          rowNumber: getVal("rowNumber"),
+          inlis: getVal("inlis"),
+          branch: getVal("branch"),
+          dateFiled: getVal("dateFiled"),
+          assured: getVal("assured"),
+          policy: getVal("policy"),
+          agent: getVal("agent"),
+          dateReported: getVal("dateReported"),
+          dateLoss: getVal("dateLoss"),
+          from: getVal("from"),
+          to: getVal("to"),
+          sumInsured: getVal("sumInsured"),
+          natureClaim: getVal("natureClaim"),
+          typeVehicle: getVal("typeVehicle"),
+          plateNo: getVal("plateNo"),
+          insuredUnit: getVal("insuredUnit"),
+          engineNo: getVal("engineNo"),
+          chassis: getVal("chassis"),
+          payee: getVal("payee"),
+          preferredShop: getVal("preferredShop"),
+          lossReserved: getVal("lossReserved"),
+          amountY: getVal("amountY"),
+          status: getVal("status"),
+          remarksDate: getVal("remarksDate"),
+          dateAc: getVal("dateAc"),
+          payeeOd: getVal("payeeOd"),
+          amountAf: getVal("amountAf"),
+          dateClosed: getVal("dateClosed"),
+          amountPaid: getVal("amountPaid"),
+          voucherNo: getVal("voucherNo"),
+          orNo: getVal("orNo"),
+          datePaidVoucher: getVal("datePaidVoucher"),
+          paymentFrom: getVal("paymentFrom"),
+          dateForwarded: getVal("dateForwarded"),
+          adjuster: getVal("adjuster"),
+        };
+      }
+
+      function findRecord() {
+        var query = document.getElementById("globalSearch").value;
+        if (!query) {
+          alert("Please type a Branch Claim Number, Assured Name, or Policy Number to search.");
+          return;
+        }
+
+        google.script.run
+          .withSuccessHandler(function (r) {
+            if (r) {
+              document.getElementById("rowNumber").value = r.rowNumber;
+              document.getElementById("inlis").value = r.inlis;
+              document.getElementById("branch").value = r.branch;
+              document.getElementById("dateFiled").value = r.dateFiled;
+              document.getElementById("assured").value = r.assured;
+              document.getElementById("policy").value = r.policy;
+              document.getElementById("agent").value = r.agent;
+              document.getElementById("dateReported").value = r.dateReported;
+              document.getElementById("dateLoss").value = r.dateLoss;
+              document.getElementById("from").value = r.from;
+              document.getElementById("to").value = r.to;
+              document.getElementById("sumInsured").value = r.sumInsured;
+              document.getElementById("natureClaim").value = r.natureClaim;
+              document.getElementById("typeVehicle").value = r.typeVehicle;
+              document.getElementById("plateNo").value = r.plateNo;
+              document.getElementById("insuredUnit").value = r.insuredUnit;
+              document.getElementById("engineNo").value = r.engineNo;
+              document.getElementById("chassis").value = r.chassis;
+              document.getElementById("payee").value = r.payee;
+              document.getElementById("preferredShop").value = r.preferredShop;
+              document.getElementById("lossReserved").value = r.lossReserved;
+              document.getElementById("amountY").value = r.amountY;
+              document.getElementById("status").value = r.status;
+              document.getElementById("remarksDate").value = r.remarksDate;
+              document.getElementById("dateAc").value = r.dateAc;
+              document.getElementById("payeeOd").value = r.payeeOd;
+              document.getElementById("amountAf").value = r.amountAf;
+              document.getElementById("dateClosed").value = r.dateClosed;
+              document.getElementById("amountPaid").value = r.amountPaid;
+              document.getElementById("voucherNo").value = r.voucherNo;
+              document.getElementById("orNo").value = r.orNo;
+              document.getElementById("datePaidVoucher").value = r.datePaidVoucher;
+              document.getElementById("paymentFrom").value = r.paymentFrom;
+              document.getElementById("dateForwarded").value = r.dateForwarded;
+              document.getElementById("adjuster").value = r.adjuster;
+              alert("Record found on Sheet Row: " + r.rowNumber);
+            } else {
+              alert("No record matches your search criteria.");
+            }
+          })
+          .searchRecord(query);
+      }
+
+      function submitData() {
+        var data = getFormData();
+
+        google.script.run
+          .withSuccessHandler(function () {
+            document.getElementById("entryForm").reset();
+            document.getElementById("rowNumber").value = "";
+            alert("New Record Added Successfully!");
+          })
+          .withFailureHandler(function (error) {
+            alert("System Error: " + error.message);
+          })
+          .processForm(data);
+      }
+
+      function updateData() {
+        var row = document.getElementById("rowNumber").value;
+        if (!row) {
+          alert("Please pull up a record using Search before clicking Update.");
+          return;
+        }
+
+        var data = getFormData();
+        google.script.run
+          .withSuccessHandler(function () {
+            alert("Record Updated Successfully on Row " + row);
+          })
+          .updateForm(data);
+      }
+    </script>
+  </body>
+</html>
